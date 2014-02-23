@@ -1,9 +1,13 @@
 $def with (temp_series, lastimage, sensors, cond_serie)
 <div class="container">
+<div class="row">
+<div class="col-md-12">
 <h2>Měření za posledních 10 hodin</h2>
   <div class="graph" id="graph-temp-hum" data-type="line" data-title="Tempreatures" data-ytitle="Tempreature" data-series="$temp_series"></div>
 </div>
-<div class="container">
+</div>
+<div class="row">
+<div class="col-md-12">
   <h2>Teplotní rekordy</h2>
   <table class="bordered-table">
   <tr><th>Senzor</th><th>Minimum</th><th>Maximum</th></tr>
@@ -11,11 +15,17 @@ $def with (temp_series, lastimage, sensors, cond_serie)
     <tr><td>$sensor['name']</td><td>$sensor['min']</td><td>$sensor['max']</td></tr>
   </table>
 </div>
-<div class="container">
+</div>
+<div class="row">
+<div class="col-md-12">
   <div><h2>Poslední fotografie pořízená $lastimage.rstrip('.jpg')</h2><img width="1000" src="static/images/$lastimage" /></div>
 </div>
-<div class="container">
+</div>
+<div class="row">
+<div class="col-md-12">
 <h2>Stav podnebí</h2>
   <div class="graph" id="graph-condition" data-type="line" data-title="Conditions" data-ytitle="Condition" data-series="$cond_serie"></div>
+</div>
+</div>
 </div>
 
