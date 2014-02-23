@@ -52,11 +52,11 @@ class index:
     lastimage = images[-1]
 
     #Conditions
-    cond_serie = {'name': 'Condition', 'data': []}
-    data = db.select('records', what="date,condition", where='position = "outside - internet"', order="date DESC", limit=120)
+    cond_serie = []
+    data = db.query('select condition, count(condition) as count from (select condition from records where condition != "Inside" limit 120) group by condition;')
     # data musi byt setrizena - proto prevod na list a trizeni
-    for record in reversed(data.list()):
-      cond_serie['data'].append([int(datetime.datetime.strptime(record['date'], "%Y-%m-%d %H:%M:%S").strftime('%s')) * 1000, record['condition']])
+    for record in data:
+      cond_serie.append([record['condition'], record['count']])
 
     return render.index(json.dumps(temp_series), lastimage, sensors, json.dumps(cond_serie))
 
