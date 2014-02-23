@@ -1,5 +1,10 @@
 (function($){
   $(document).ready(function() {
+  Highcharts.setOptions({
+    global: {
+        timezoneOffset: -1 * 60
+            }
+    });
     $('.graph').each(function () {
       $(this).highcharts({
           chart: {
