@@ -2,21 +2,27 @@ $def with (temp_series, lastimage, sensors, cond_serie)
 <div class="container">
 <div class="row">
 <div class="well">
-<div class="col-md-6">
+<div class="col-md-4">
 <h3>Poslední měření</h3>
-<button type="button" class="btn btn-primary">Posledních deset hodin</button>
-<button type="button" class="btn btn-primary">Dnes</button>
-<button type="button" class="btn btn-primary">Včera</button>
-<button type="button" class="btn btn-primary">Týden</button>
+<a href="/last/now"><button type="button" class="btn btn-primary">Deset hodin</button></a>
+<a href="/last/today"><button type="button" class="btn btn-primary">Dnes</button></a> 
+<a href="/last/yesterday"><button type="button" class="btn btn-primary">Včera</button></a> 
+<a href="/last/week"><button type="button" class="btn btn-primary">7 dní</button></a> 
 </div>
-<div class="col-md-6">
-<h3>Průměry</h3>
-</div>
+<div class="col-md-4">
+<h3>Průměry teplot</h3>
 <button type="button" class="btn btn-primary">Denní</button>
 <button type="button" class="btn btn-primary">Měsíční</button>
 <button type="button" class="btn btn-primary">Roční</button>
 </div>
-<div>
+<div class="col-md-4">
+<h3>Záznamy obrazu</h3>
+</div>
+<button type="button" class="btn btn-primary">Včera</button>
+<button type="button" class="btn btn-primary">Předevčírem</button>
+<button type="button" class="btn btn-primary">Ostatní</button>
+</div>
+</div>
 <div class="row">
 <div class="col-md-12">
 <h2>Měření za posledních 10 hodin</h2>
@@ -30,7 +36,7 @@ $def with (temp_series, lastimage, sensors, cond_serie)
   <tbody>
   <tr><th>Senzor</th><th>Minimum</th><th>Maximum</th></tr>
   $for sensor in sensors:
-    <tr><td>$sensor['name']</td><td>$sensor['min']</td><td>$sensor['max']</td></tr>
+    <tr><td>$sensor['name']</td><td>$sensor['min'] °C</td><td>$sensor['max'] °C</td></tr>
     </tbody>
   </table>
 </div>
@@ -41,7 +47,7 @@ $def with (temp_series, lastimage, sensors, cond_serie)
 </div>
 <div class="row">
 <div class="col-md-12">
-  <div><h2>Poslední fotografie pořízená $lastimage.rstrip('.jpg')</h2><img width="1000" src="static/images/$lastimage" /></div>
+  <div><h2>Poslední fotografie pořízená $lastimage.rstrip('.jpg')</h2><img width="1000" src="/static/images/$lastimage" /></div>
 </div>
 </div>
 <div class="row">
