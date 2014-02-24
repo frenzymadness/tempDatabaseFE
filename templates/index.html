@@ -1,24 +1,24 @@
 $def with (lasttemps, temp_series, lastimage, sensors, cond_serie)
 <div class="row well">
-    <div class="col-md-4">
-      <h3>Poslední měření</h3>
-      <a href="/last/now"><button type="button" class="btn btn-primary">Deset hodin</button></a>
-      <a href="/last/today"><button type="button" class="btn btn-primary">Dnes</button></a>
-      <a href="/last/yesterday"><button type="button" class="btn btn-primary">Včera</button></a>
-      <a href="/last/week"><button type="button" class="btn btn-primary">7 dní</button></a>
-    </div>
-    <div class="col-md-4">
-      <h3>Průměry teplot</h3>
-      <button type="button" class="btn btn-primary">Denní</button>
-      <button type="button" class="btn btn-primary">Měsíční</button>
-      <button type="button" class="btn btn-primary">Roční</button>
-    </div>
-    <div class="col-md-4">
-      <h3>Záznamy obrazu</h3>
-      <button type="button" class="btn btn-primary">Včera</button>
-      <button type="button" class="btn btn-primary">Předevčírem</button>
-      <a href="/static/gifs/"><button type="button" class="btn btn-primary">Ostatní</button></a>
-    </div>
+  <div class="col-md-4">
+    <h3>Poslední měření</h3>
+    <a href="/last/now"><button type="button" class="btn btn-primary">Deset hodin</button></a>
+    <a href="/last/today"><button type="button" class="btn btn-primary">Dnes</button></a>
+    <a href="/last/yesterday"><button type="button" class="btn btn-primary">Včera</button></a>
+    <a href="/last/week"><button type="button" class="btn btn-primary">7 dní</button></a>
+  </div>
+  <div class="col-md-4">
+    <h3>Průměry teplot</h3>
+    <button type="button" class="btn btn-primary">Denní</button>
+    <button type="button" class="btn btn-primary">Měsíční</button>
+    <button type="button" class="btn btn-primary">Roční</button>
+  </div>
+  <div class="col-md-4">
+    <h3>Záznamy obrazu</h3>
+    <button type="button" class="btn btn-primary">Včera</button>
+    <button type="button" class="btn btn-primary">Předevčírem</button>
+    <a href="/static/gifs/"><button type="button" class="btn btn-primary">Ostatní</button></a>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -30,25 +30,25 @@ $def with (lasttemps, temp_series, lastimage, sensors, cond_serie)
   <div class="col-md-6">
     <h2>Teplotní rekordy</h2>
     <table class="table table-bordered" width="100%">
-  <tbody>
-  <tr><th>Senzor</th><th>Minimum</th><th>Maximum</th></tr>
-  $for sensor in sensors:
-    <tr><td>$sensor['name']</td><td>$sensor['min'] °C</td><td>$sensor['max'] °C</td></tr>
-    </tbody>
-  </table>
-<h2>
-    Aktuální teploty
-</h2>
-  <table class="table table-bordered">
       <tbody>
-          <tr>
-              <th>Senzor</th>
-              <th>Aktuální teplota</th>
-          </tr>
-          $for lasttemp in lasttemps:
-            <tr><td>$lasttemp['name']</td><td>$lasttemp['temp']</td></tr>
+        <tr><th>Senzor</th><th>Minimum</th><th>Maximum</th></tr>
+        $for sensor in sensors:
+        <tr><td>$sensor['name']</td><td>$sensor['min'] °C</td><td>$sensor['max'] °C</td></tr>
       </tbody>
-  </table>
+    </table>
+    <h2>
+      Aktuální teploty
+    </h2>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Senzor</th>
+          <th>Aktuální teplota</th>
+        </tr>
+        $for lasttemp in lasttemps:
+        <tr><td>$lasttemp['name']</td><td>$lasttemp['temp']</td></tr>
+      </tbody>
+    </table>
   </div>
   <div class="col-md-6">
     <h2>Stav podnebí</h2>
