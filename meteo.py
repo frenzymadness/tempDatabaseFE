@@ -63,12 +63,16 @@ class index:
         serie['data'].append([int(datetime.datetime.strptime(record['date'], "%Y-%m-%d %H:%M:%S").strftime('%s')) * 1000, record['tempreature']])
         # Hledani maxim a minim
         if record['tempreature'] < sensor['min']:
-          sensor['min'] = record['tempreature'] 
+          sensor['min'] = record['tempreature']
         if record['tempreature'] > sensor['max']:
-          sensor['max'] = record['tempreature'] 
+          sensor['max'] = record['tempreature']
       temp_series.append(serie)
       sensors.append(sensor)
 
+    # Posledni hodnoty
+    lasttemps = []
+    for serie in temp_series:
+      lasttemps.append({'name': serie['name'], 'temp': serie['data'][-1][1]})
     # Zobrazeni posledni fotografie
     images = os.listdir(rootdir + 'static/images/')
     images.sort()
@@ -81,8 +85,8 @@ class index:
     for record in data:
       cond_serie.append([record['condition'], record['count']])
 
-    return render.index(json.dumps(temp_series), lastimage, sensors, json.dumps(cond_serie))
+    return render.index(lasttemps, json.dumps(temp_series), lastimage, sensors, json.dumps(cond_serie))
 
 ########################################################################
-    
-application = web.application(urls, globals(), autoreload=True).wsgifunc()  
+
+application = web.application(urls, globals(), autoreload=True).wsgifunc()
