@@ -19,7 +19,6 @@
       }
     }
 
-
     $( '#date' ).change(function () {
       stopTimers();
 
@@ -46,16 +45,10 @@
               $('#stream').attr('src', "/static/images/" + value);
               $('#actualphoto').html(value);
             }, 200*index));
-
-
           });
-
         },
         async:true
       });
-
-
-
     });
 
     $('#stop').on('click', function() {
@@ -66,13 +59,13 @@
       location.reload();
     });
 
-    $('.photolink').on('click', function(e) {
+    $(document).on('click', '.photolink', function(e) {
       e.stopImmediatePropagation();
       e.preventDefault();
-      console.log($(this).attr('href'));
       stopTimers();
-      $('#stream').attr('src', "/static/images/" + $(this).attr('href'));
+      $('#stream').attr('src', $(this).attr('href'));
       $('#actualphoto').html($(this).attr('href'));
+      window.scrollTo(0, 0);
       return false;
     });
   });
