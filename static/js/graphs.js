@@ -10,6 +10,13 @@
         chart: {
           type: 'line'
         },
+        plotOptions: {
+          line: {
+            marker: {
+              enabled: false
+            }
+          }
+        },
         title: {
           text: $(this).data('title')
         },
