@@ -19,7 +19,8 @@ db = web.database(dbn='sqlite', db=rootdir + 'database/database.sqlite')
 urls = (
     '/', 'index',
     '/last/(.+)', 'index',
-    '/photos/', 'photos'
+    '/photos/', 'photos',
+    '/photos/(.+)', 'photos'
     )
 
 ########################################################################
@@ -93,8 +94,13 @@ class index:
 
 class photos:
     """Zaznamy starych fotografii"""
-    def GET(self):
-        return render.photos()
+    def GET(self, date=None):
+        if date is None:
+            return render.photos()
+        else:
+            files = os.listdir(rootdir + 'static/images/')
+            images = [image for image in files if image.startswith(date)]
+            return json.dumps(images)
 
 ########################################################################
 
