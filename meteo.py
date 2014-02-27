@@ -18,7 +18,8 @@ db = web.database(dbn='sqlite', db=rootdir + 'database/database.sqlite')
 
 urls = (
     '/', 'index',
-    '/last/(.+)', 'index'
+    '/last/(.+)', 'index',
+    '/photos/', 'photos'
     )
 
 ########################################################################
@@ -88,6 +89,12 @@ class index:
             cond_serie.append([record['condition'], record['count']])
 
         return render.index(lasttemps, json.dumps(temp_series), lastimage, sensors, json.dumps(cond_serie))
+
+
+class photos:
+    """Zaznamy starych fotografii"""
+    def GET(self):
+        return render.photos()
 
 ########################################################################
 
