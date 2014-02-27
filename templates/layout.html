@@ -30,8 +30,28 @@ $def with (content)
         <h1>meteo.frenzy.cz</h1>
         <p class="lead"></p>
       </div>
-
       <div class="container">
+        <div class="row well">
+          <div class="col-md-4">
+            <h3>Poslední měření</h3>
+            <a href="/last/now"><button type="button" class="btn btn-primary">Deset hodin</button></a>
+            <a href="/last/today"><button type="button" class="btn btn-primary">Dnes</button></a>
+            <a href="/last/yesterday"><button type="button" class="btn btn-primary">Včera</button></a>
+            <a href="/last/week"><button type="button" class="btn btn-primary">7 dní</button></a>
+          </div>
+          <div class="col-md-4">
+            <h3>Průměry teplot</h3>
+            <button type="button" class="btn btn-primary">Denní</button>
+            <button type="button" class="btn btn-primary">Měsíční</button>
+            <button type="button" class="btn btn-primary">Roční</button>
+          </div>
+          <div class="col-md-4">
+            <h3>Záznamy obrazu</h3>
+            <button type="button" class="btn btn-primary">Včera</button>
+            <button type="button" class="btn btn-primary">Předevčírem</button>
+            <a href="/static/gifs/"><button type="button" class="btn btn-primary">Ostatní</button></a>
+          </div>
+        </div>
         $:content
       </div>
       <div class="container">
