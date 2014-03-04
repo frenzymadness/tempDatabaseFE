@@ -70,6 +70,15 @@ class last:
             weekback = datetime.date.today() - datetime.timedelta(days=7)
             weekback = weekback.strftime("%Y-%m-%d") + ' 00:00:00'
             where = 'date between "%s" and "%s"' % (weekback, today)
+        if period == 'thismonth':
+            thismonth = time.strftime('%Y-%m') + '%'
+            where = 'date like "%s"' % (thismonth)
+        if period == 'lastmonth':
+            today = datetime.date.today()
+            first = datetime.date(day=1, month=today.month, year=today.year)
+            lastmonth = first - datetime.timedelta(days=1)
+            lastmonth = lastmonth.strftime("%Y-%m") + '%'
+            where = 'date like "%s"' % (lastmonth)
 
         # Prazdne pole pro serie dat grafu a maxima a minima senzeoru
         temp_series = []
