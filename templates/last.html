@@ -1,0 +1,25 @@
+$def with (temp_series, sensors, cond_serie)
+<div class="row">
+  <div class="col-md-12">
+    <h2>Teplotní údaje</h2>
+    <div class="graphline" id="graph-temp" data-title="Tempreatures" data-ytitle="Tempreature" data-series="$temp_series"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Teplotní rekordy v daném období</h2>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr><th>Senzor</th><th>Minimum</th><th>Maximum</th></tr>
+        $for sensor in sensors:
+        <tr><td>$sensor['name']</td><td>$sensor['min'] °C</td><td>$sensor['max'] °C</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h2>Stav podnebí</h2>
+    <div class="graphpie" id="graph-condition" data-title="Conditions" data-series="$cond_serie"></div>
+  </div>
+</div>
+
+

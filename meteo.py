@@ -18,7 +18,7 @@ db = web.database(dbn='sqlite', db=rootdir + 'database/database.sqlite')
 
 urls = (
     '/', 'index',
-    '/last/(.+)', 'index',
+    '/last/(.+)', 'last',
     '/photos/', 'photos',
     '/photos/(.+)', 'photos'
     )
@@ -26,8 +26,29 @@ urls = (
 ########################################################################
 
 
-# Stranka s poslednim merenim
+# Uvodni stranka s poslednim merenim
 class index:
+
+    def GET(self):
+        # Posledni teplota pro kazdy sensor
+        lasttemps = []
+        result = db.query("SELECT DISTINCT position FROM records ORDER BY date, position DESC ;")
+        for row in result:
+            name = row['position']
+            data = db.query('SELECT date, tempreature FROM records WHERE position = "%s" ORDER BY date DESC ' % (name)).list()
+            serie = {'name': name, 'date': data[0]['date'], 'temp': data[0]['tempreature']}
+            lasttemps.append(serie)
+
+        # Zobrazeni posledni fotografie
+        images = os.listdir(rootdir + 'static/images/')
+        images.sort()
+        lastimage = images[-1]
+
+        return render.index(lasttemps, lastimage)
+
+
+# Stranka nedavnou historii
+class last:
 
     def GET(self, filter=None):
     # filtrace zobrazenych hodnot dle url
@@ -72,16 +93,6 @@ class index:
             temp_series.append(serie)
             sensors.append(sensor)
 
-        # Posledni hodnoty
-        lasttemps = []
-        for serie in temp_series:
-            lasttemps.append({'name': serie['name'], 'temp': serie['data'][-1][1]})
-
-        # Zobrazeni posledni fotografie
-        images = os.listdir(rootdir + 'static/images/')
-        images.sort()
-        lastimage = images[-1]
-
         #Conditions
         cond_serie = []
         data = db.query('select condition, count(condition) as count from (select condition from records where condition != "Inside" and %s %s) group by condition;' % (where, limit))
@@ -89,7 +100,7 @@ class index:
         for record in data:
             cond_serie.append([record['condition'], record['count']])
 
-        return render.index(lasttemps, json.dumps(temp_series), lastimage, sensors, json.dumps(cond_serie))
+        return render.last(json.dumps(temp_series), sensors, json.dumps(cond_serie))
 
 
 class photos:
