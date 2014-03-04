@@ -1,0 +1,7 @@
+$def with (averages)
+$for average in averages:
+  <div class="row">
+    <div class="col-md-12">
+      <div class="graphline" id="graph-temp" data-title="Average by $average['table']" data-ytitle="Tempreature" data-series="$average['data']"></div>
+    </div>
+  </div>

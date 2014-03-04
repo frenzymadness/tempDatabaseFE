@@ -19,6 +19,7 @@ db = web.database(dbn='sqlite', db=rootdir + 'database/database.sqlite')
 urls = (
     '/', 'index',
     '/last/(.+)', 'last',
+    '/averages/', 'averages',
     '/photos/', 'photos',
     '/photos/(.+)', 'photos'
     )
@@ -50,21 +51,21 @@ class index:
 # Stranka nedavnou historii
 class last:
 
-    def GET(self, filter=None):
+    def GET(self, period=None):
     # filtrace zobrazenych hodnot dle url
         limit = ''
         where = ''
-        if filter == 'now' or filter is None:
+        if period == 'now' or period is None:
             limit = 'LIMIT 120'
             where = '1'
-        if filter == 'today':
+        if period == 'today':
             today = time.strftime('%Y-%m-%d') + ' %'
             where = 'date like "%s"' % (today)
-        if filter == 'yesterday':
+        if period == 'yesterday':
             yesterday = datetime.date.today() - datetime.timedelta(days=1)
             yesterday = yesterday.strftime("%Y-%m-%d") + ' %'
             where = 'date like "%s"' % (yesterday)
-        if filter == 'week':
+        if period == 'week':
             today = time.strftime('%Y-%m-%d') + ' 23:59:59'
             weekback = datetime.date.today() - datetime.timedelta(days=7)
             weekback = weekback.strftime("%Y-%m-%d") + ' 00:00:00'
@@ -101,6 +102,29 @@ class last:
             cond_serie.append([record['condition'], record['count']])
 
         return render.last(json.dumps(temp_series), sensors, json.dumps(cond_serie))
+
+
+class averages:
+    def GET(self):
+        tables = ['days', 'months', 'years']
+        time_formats = ['%Y-%m-%d', '%Y-%m', '%Y']
+        averages = []
+        for index in xrange(len(tables)):
+            averages.append({'table': tables[index], 'data': []})
+            # Vybereme vsechny cidla z databaze a vytvorime serii pro kazde z nich
+            result = db.query("SELECT DISTINCT position FROM %s ORDER BY date, position DESC;" % (tables[index]))
+            for row in result:
+                name = row['position']
+                # Zakladni struktura kazde serie
+                serie = {"name": name, "data": []}
+                # vybereme data jen pro konkretni senzor
+                data = db.query('SELECT date, tempreature FROM %s WHERE position = "%s" ORDER BY date DESC' % (tables[index], name))
+                # data musi byt setrizena - proto prevod na list a trizeni
+                for record in reversed(data.list()):
+                    serie["data"].append([int(datetime.datetime.strptime(record['date'], time_formats[index]).strftime('%s')) * 1000, record['tempreature']])
+                averages[index]["data"].append(serie)
+            averages[index]['data'] = json.dumps(averages[index]['data'])
+        return render.averages(averages)
 
 
 class photos:
