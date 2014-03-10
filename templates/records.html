@@ -1,0 +1,35 @@
+$def with (mins, maxs)
+<div class="row">
+    <div class="col-md-6">
+        <h3>Minimální teploty</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Datum a čas</th>
+                <th>Umístění</th>
+                <th>Minimální teplota</th>
+            </tr>
+            $for record in mins:
+                <tr>
+                    <td>$record['date']</td>
+                    <td>$record['position']</td>
+                    <td>$record['minimum'] °C</td>
+                </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Maximální teploty</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Datum a čas</th>
+                <th>Umístění</th>
+                <th>Maximální teplota</th>
+            </tr>
+            $for record in maxs:
+                <tr>
+                    <td>$record['date']</td>
+                    <td>$record['position']</td>
+                    <td>$record['maximum'] °C</td>
+                </tr>
+        </table>
+    </div>
+</div>

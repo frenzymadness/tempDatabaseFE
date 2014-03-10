@@ -20,6 +20,7 @@ urls = (
     '/', 'index',
     '/last/(.+)', 'last',
     '/averages/', 'averages',
+    '/records/', 'records',
     '/photos/', 'photos',
     '/photos/(.+)', 'photos'
     )
@@ -134,6 +135,13 @@ class averages:
                 averages[index]["data"].append(serie)
             averages[index]['data'] = json.dumps(averages[index]['data'])
         return render.averages(averages)
+
+
+class records:
+    def GET(self):
+        mins = db.query("SELECT date, min(tempreature) as minimum, position FROM records GROUP BY position;").list()
+        maxs = db.query("SELECT date, max(tempreature) as maximum, position FROM records GROUP BY position;").list()
+        return render.records(mins, maxs)
 
 
 class photos:
